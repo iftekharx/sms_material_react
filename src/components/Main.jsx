@@ -21,6 +21,7 @@ import {
 
 import MenuIcon from "@mui/icons-material/Menu"
 import { useState } from "react"
+import { EditStudentForm } from "./EditStudentForm"
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -114,13 +115,39 @@ export const Main = () => {
   const [open, setOpen] = useState(false)
   const [openAbout, setOpenAbout] = useState(false)
   const [showAdd, setShowAdd] = useState(false)
+  const [showEdit, setShowEdit] = useState(false)
+
   const [name, setName] = useState("")
   const [roll, setRoll] = useState("")
   const [gender, setGender] = useState(true)
   const [genderStr, setGenderStr] = useState("Male")
   const [department, setDepartment] = useState("")
   const [school, setSchool] = useState("")
-  const [filteredList, setFilteredList] = new useState(students)
+  const [filteredList, setFilteredList] = useState(students)
+  const [currentStudent, setCurrentStudent] = useState(null)
+
+  const EditStudent = (id, name, roll, genderStr, department, school) => {
+    setStudents(
+      students.map((student) => {
+        if (student.id == id) {
+          student.name = name
+          student.roll = roll
+          student.gender = genderStr
+          student.department = department
+          student.school = school
+        }
+        return student
+      })
+    )
+
+    setFilteredList(students)
+
+    setShowEdit(false)
+  }
+
+  const onEdit = () => {
+    setShowEdit(!showEdit)
+  }
 
   const handleGenderMale = (e) => {
     setGender(true)
@@ -298,10 +325,25 @@ export const Main = () => {
                 deleteStudent(student.id)
               }}
               student={student}
+              setCurrentStudent={() => {
+                setCurrentStudent(student)
+              }}
+              onEdit={onEdit}
             />
           ))}
         </Grid>
       </Container>
+
+      {showEdit && (
+        <EditStudentForm
+          showEdit={showEdit}
+          EditStudent={EditStudent}
+          student={currentStudent}
+          CloseEdit={() => {
+            setShowEdit(false)
+          }}
+        />
+      )}
 
       <StyledModal
         open={openAbout}

@@ -15,7 +15,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close"
 import { useState } from "react"
 
-export const Student = ({ student, onDelete }) => {
+export const Student = ({ student, onDelete, onEdit, setCurrentStudent }) => {
   const [showDetails, setShowDetails] = useState(false)
 
   return (
@@ -60,7 +60,14 @@ export const Student = ({ student, onDelete }) => {
           >
             {showDetails ? "Hide" : "View"}
           </Button>
-          <Button sx={{ color: "black" }} size="small">
+          <Button
+            sx={{ color: "black" }}
+            size="small"
+            onClick={() => {
+              setCurrentStudent(student)
+              onEdit(true)
+            }}
+          >
             Edit
           </Button>
           <Button
