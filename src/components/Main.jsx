@@ -3,33 +3,16 @@ import { Pets, Mail, Notifications } from "@mui/icons-material/"
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt"
 import InfoIcon from "@mui/icons-material/Info"
 import DataObjectIcon from "@mui/icons-material/DataObject"
-import {
-  Button,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  ButtonGroup,
-  FormGroup,
-  Modal,
-  styled,
-} from "@mui/material"
+import { Button, ButtonGroup, Modal, styled } from "@mui/material"
 import { Student } from "./Student"
-import ManIcon from "@mui/icons-material/Man"
+import { AddStudentForm } from "./AddStudentForm"
 
 import {
   AppBar,
-  Avatar,
-  Badge,
   Box,
   InputBase,
   Container,
   Grid,
-  FormControlLabel,
-  Checkbox,
-  TextField,
-  Link,
-  Grow,
   Menu,
   MenuItem,
   Toolbar,
@@ -286,148 +269,21 @@ export const Main = () => {
         </Menu>
       </AppBar>
       {showAdd && (
-        <Grow
-          in={showAdd}
-          style={{ transformOrigin: "0 0 0" }}
-          {...(showAdd ? { timeout: 1000 } : {})}
-        >
-          <Container component="main" maxWidth="xs">
-            <Box
-              sx={{
-                marginTop: 8,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                backgroundColor: "#86B3CA",
-              }}
-            >
-              <Typography component="h1" variant="h5" color={"black"}>
-                Add Student
-              </Typography>
-              <Box
-                component="form"
-                onSubmit={AddStudent}
-                noValidate={false}
-                sx={{ mt: 1, p: 5 }}
-              >
-                <TextField
-                  backgroundColor={"white"}
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Name"
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.target.value)
-                  }}
-                  name="name"
-                  autoComplete="name"
-                  autoFocus
-                  sx={{ backgroundColor: "white" }}
-                  InputLabelProps={{
-                    style: { color: "darkblue" },
-                  }}
-                />
-                <TextField
-                  backgroundColor={"white"}
-                  margin="normal"
-                  required
-                  fullWidth
-                  value={roll}
-                  id="roll"
-                  onChange={(e) => {
-                    setRoll(e.target.value)
-                  }}
-                  label="Roll Number"
-                  name="roll"
-                  autoComplete="roll"
-                  autoFocus
-                  sx={{ backgroundColor: "white" }}
-                  InputLabelProps={{
-                    style: { color: "darkblue" },
-                  }}
-                />
-                <TextField
-                  backgroundColor={"white"}
-                  margin="normal"
-                  required
-                  value={department}
-                  fullWidth
-                  onChange={(e) => {
-                    setDepartment(e.target.value)
-                  }}
-                  id="department"
-                  label="Department"
-                  name="department"
-                  autoComplete="department"
-                  autoFocus
-                  sx={{ backgroundColor: "white" }}
-                  InputLabelProps={{
-                    style: { color: "darkblue" },
-                  }}
-                />
-                <TextField
-                  backgroundColor={"white"}
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="school"
-                  value={school}
-                  label="School"
-                  onChange={(e) => {
-                    setSchool(e.target.value)
-                  }}
-                  name="school"
-                  autoComplete="school"
-                  autoFocus
-                  sx={{ backgroundColor: "white" }}
-                  InputLabelProps={{
-                    style: { color: "darkblue" },
-                  }}
-                />
-
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={gender}
-                        onChange={handleGenderMale}
-                        name="male"
-                      />
-                    }
-                    label="Male"
-                    sx={{ color: "black" }}
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={!gender}
-                        onChange={handleGenderFemale}
-                        name="female"
-                      />
-                    }
-                    sx={{ color: "black" }}
-                    label="Female"
-                  />
-                </FormGroup>
-
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ backgroundColor: "darkred", mt: 3, mb: 2 }}
-                >
-                  Add Student
-                </Button>
-                <Grid container>
-                  <Grid item xs></Grid>
-                  <Grid item></Grid>
-                </Grid>
-              </Box>
-            </Box>
-          </Container>
-        </Grow>
+        <AddStudentForm
+          showAdd={showAdd}
+          AddStudent={AddStudent}
+          gender={gender}
+          name={name}
+          roll={roll}
+          department={department}
+          school={school}
+          setName={setName}
+          setRoll={setRoll}
+          setDepartment={setDepartment}
+          setSchool={setSchool}
+          handleGenderMale={handleGenderMale}
+          handleGenderFemale={handleGenderFemale}
+        />
       )}
       <Container sx={{ py: 8 }} maxWidth="md">
         {/* End hero unit */}
