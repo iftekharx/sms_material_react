@@ -22,13 +22,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu"
 import { useState } from "react"
 import { EditStudentForm } from "./EditStudentForm"
-
-const StyledModal = styled(Modal)({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundColor: "black",
-})
+import { AboutModal } from "./AboutModal"
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -345,56 +339,16 @@ export const Main = () => {
         />
       )}
 
-      <StyledModal
-        open={openAbout}
-        onClose={(e) => setOpenAbout(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          width={400}
-          height={280}
-          color={"text.primary"}
-          backgroundColor={"white"}
-          sx={{ border: "2px solid black" }}
-          p={3}
-          borderRadius={5}
-        >
-          <Typography variant="h2" color="black" textAlign="center">
-            About
-          </Typography>
-          <Box>
-            <br></br>
-            <br></br>
-
-            <Typography
-              textAlign={"center"}
-              color="black"
-              fontWeight={500}
-              variant="h6"
-            >
-              This Web App is made by Iftekhar Hyder
-            </Typography>
-            <br></br>
-            <br></br>
-            <br></br>
-          </Box>
-
-          <ButtonGroup
-            fullWidth
-            variant="contained"
-            aria-label="outlined primary button group"
-          >
-            <Button
-              onClick={() => {
-                setOpenAbout(false)
-              }}
-            >
-              Close
-            </Button>
-          </ButtonGroup>
-        </Box>
-      </StyledModal>
+      {openAbout && (
+        <AboutModal
+          onOpen={(e) => {
+            setOpenAbout(true)
+          }}
+          onClose={(e) => {
+            setOpenAbout(false)
+          }}
+        />
+      )}
     </>
   )
 }
