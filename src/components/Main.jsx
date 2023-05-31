@@ -61,7 +61,7 @@ export const Main = () => {
       id: 1,
       name: "Robin Sharma",
       roll: "12000",
-      gender: "male",
+      gender: "Male",
       department: "Science",
       school: "BAF SEMS",
     },
@@ -69,7 +69,7 @@ export const Main = () => {
       id: 2,
       name: "Jack Roberts",
       roll: "12008",
-      gender: "male",
+      gender: "Fale",
       department: "Science",
       school: "BAF SEMS",
     },
@@ -77,7 +77,7 @@ export const Main = () => {
       id: 3,
       name: "Kale Hashuna",
       roll: "12009",
-      gender: "male",
+      gender: "Male",
       department: "Science",
       school: "BAF SEMS",
     },
@@ -85,7 +85,7 @@ export const Main = () => {
       id: 4,
       name: "Terakota Mules",
       roll: "12001",
-      gender: "female",
+      gender: "Female",
       department: "Geography",
       school: "Notordam",
     },
@@ -93,7 +93,7 @@ export const Main = () => {
       id: 5,
       name: "Meckhi Saho",
       roll: "12002",
-      gender: "female",
+      gender: "Female",
       department: "Economics",
       school: "BAF SEMS",
     },
@@ -101,7 +101,7 @@ export const Main = () => {
       id: 6,
       name: "Topuac Chandra",
       roll: "12003",
-      gender: "male",
+      gender: "Male",
       department: "Science",
       school: "SFX",
     },
@@ -168,8 +168,8 @@ export const Main = () => {
     }
   }
 
-  const AddStudent = (e) => {
-    e.preventDefault()
+  const AddStudent = (name, roll, school, department) => {
+    // e.preventDefault()
     const studentsStored = students.sort(function (a, b) {
       if (a.id < b.id) {
         return -1
@@ -294,14 +294,6 @@ export const Main = () => {
           showAdd={showAdd}
           AddStudent={AddStudent}
           gender={gender}
-          name={name}
-          roll={roll}
-          department={department}
-          school={school}
-          setName={setName}
-          setRoll={setRoll}
-          setDepartment={setDepartment}
-          setSchool={setSchool}
           handleGenderMale={handleGenderMale}
           handleGenderFemale={handleGenderFemale}
         />

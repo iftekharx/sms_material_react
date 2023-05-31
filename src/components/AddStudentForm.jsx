@@ -11,22 +11,54 @@ import {
   FormGroup,
   Grow,
 } from "@mui/material"
+import { useFormik } from "formik"
+import * as Yup from "yup"
+
+const AddStudentSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  roll: Yup.string()
+    .min(9, "Roll number must be 9 digit atleast")
+    .max(9, "Roll number must not be more than 9 digits")
+    .matches("[0-9]+", "Only digits allowed")
+    .required("Required"),
+  school: Yup.string()
+    .min(5, "Too Short!")
+    .max(100, "Too Long!")
+    .required("Required"),
+  department: Yup.string()
+    .min(5, "Too Short!")
+    .max(100, "Too Long!")
+    .required("Required"),
+})
 
 export const AddStudentForm = ({
   showAdd,
   AddStudent,
   gender,
-  name,
-  roll,
-  school,
-  department,
-  setName,
-  setRoll,
-  setDepartment,
-  setSchool,
   handleGenderMale,
   handleGenderFemale,
 }) => {
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      roll: "",
+      school: "",
+      department: "",
+    },
+    validationSchema: AddStudentSchema,
+    onSubmit: (values) => {
+      const name = values.name
+      const roll = values.roll
+      const school = values.school
+      const department = values.department
+
+      AddStudent(name, roll, school, department)
+      formik.resetForm()
+    },
+  })
   return (
     <Grow
       in={showAdd}
@@ -48,22 +80,16 @@ export const AddStudentForm = ({
           </Typography>
           <Box
             component="form"
-            onSubmit={AddStudent}
-            noValidate={false}
+            onSubmit={formik.handleSubmit}
             sx={{ mt: 1, p: 5 }}
           >
             <TextField
               backgroundColor={"white"}
               margin="normal"
-              required
               fullWidth
               id="name"
+              {...formik.getFieldProps("name")}
               label="Name"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value)
-              }}
-              name="name"
               autoComplete="name"
               autoFocus
               sx={{ backgroundColor: "white" }}
@@ -71,18 +97,16 @@ export const AddStudentForm = ({
                 style: { color: "darkblue" },
               }}
             />
+            {formik.touched.name && formik.errors.name ? (
+              <div>{formik.errors.name}</div>
+            ) : null}
             <TextField
               backgroundColor={"white"}
               margin="normal"
-              required
               fullWidth
-              value={roll}
               id="roll"
-              onChange={(e) => {
-                setRoll(e.target.value)
-              }}
+              {...formik.getFieldProps("roll")}
               label="Roll Number"
-              name="roll"
               autoComplete="roll"
               autoFocus
               sx={{ backgroundColor: "white" }}
@@ -90,18 +114,16 @@ export const AddStudentForm = ({
                 style: { color: "darkblue" },
               }}
             />
+            {formik.touched.roll && formik.errors.roll ? (
+              <div>{formik.errors.roll}</div>
+            ) : null}
             <TextField
               backgroundColor={"white"}
               margin="normal"
-              required
-              value={department}
               fullWidth
-              onChange={(e) => {
-                setDepartment(e.target.value)
-              }}
+              {...formik.getFieldProps("department")}
               id="department"
               label="Department"
-              name="department"
               autoComplete="department"
               autoFocus
               sx={{ backgroundColor: "white" }}
@@ -109,18 +131,16 @@ export const AddStudentForm = ({
                 style: { color: "darkblue" },
               }}
             />
+            {formik.touched.department && formik.errors.department ? (
+              <div>{formik.errors.department}</div>
+            ) : null}
             <TextField
               backgroundColor={"white"}
               margin="normal"
-              required
               fullWidth
               id="school"
-              value={school}
               label="School"
-              onChange={(e) => {
-                setSchool(e.target.value)
-              }}
-              name="school"
+              {...formik.getFieldProps("school")}
               autoComplete="school"
               autoFocus
               sx={{ backgroundColor: "white" }}
@@ -128,6 +148,9 @@ export const AddStudentForm = ({
                 style: { color: "darkblue" },
               }}
             />
+            {formik.touched.school && formik.errors.school ? (
+              <div>{formik.errors.school}</div>
+            ) : null}
 
             <FormGroup>
               <FormControlLabel
