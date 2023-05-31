@@ -12,6 +12,28 @@ import {
   Grow,
 } from "@mui/material"
 import { useState } from "react"
+import { useFormik } from "formik"
+import * as Yup from "yup"
+
+const AddStudentSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  roll: Yup.string()
+    .min(9, "Roll number must be 9 digit atleast")
+    .max(9, "Roll number must not be more than 9 digits")
+    .matches("[0-9]+", "Only digits allowed")
+    .required("Required"),
+  school: Yup.string()
+    .min(5, "Too Short!")
+    .max(100, "Too Long!")
+    .required("Required"),
+  department: Yup.string()
+    .min(5, "Too Short!")
+    .max(100, "Too Long!")
+    .required("Required"),
+})
 
 export const EditStudentForm = ({
   showEdit,
@@ -23,7 +45,7 @@ export const EditStudentForm = ({
   const [name, setName] = useState(student.name)
   const [roll, setRoll] = useState(student.roll)
 
-  const [gender, setGender] = useState(student.gender === "male" ? true : false)
+  const [gender, setGender] = useState(student.gender === "Male" ? true : false)
   const [genderStr, setGenderStr] = useState(
     gender === true ? "Male" : "Female"
   )
@@ -41,6 +63,29 @@ export const EditStudentForm = ({
 
     setGenderStr("Female")
   }
+
+  const formik = useFormik({
+    initialValues: {
+      name: student.name,
+      roll: student.roll,
+      school: student.school,
+      department: student.department,
+    },
+    validationSchema: AddStudentSchema,
+    onSubmit: (values) => {
+      const name = values.name
+      const roll = values.roll
+      const school = values.school
+      const department = values.department
+
+      setName(values.name)
+      setRoll(values.roll)
+      setDepartment(values.department)
+
+      EditStudent(id, name, roll, genderStr, department, school)
+      CloseEdit()
+    },
+  })
 
   return (
     <Grow
@@ -63,21 +108,17 @@ export const EditStudentForm = ({
           </Typography>
           <Box
             component="form"
-            onSubmit={() => {
-              EditStudent(id, name, roll, genderStr, department, school)
-            }}
-            noValidate={false}
+            onSubmit={formik.handleSubmit}
             sx={{ mt: 1, p: 5 }}
           >
             <TextField
               backgroundColor={"white"}
               margin="normal"
-              required
               fullWidth
               id="id"
               label="ID"
               disabled
-              value={id}
+              value={student.id}
               name="id"
               autoComplete="id"
               sx={{ backgroundColor: "white" }}
@@ -88,15 +129,10 @@ export const EditStudentForm = ({
             <TextField
               backgroundColor={"white"}
               margin="normal"
-              required
               fullWidth
               id="name"
               label="Name"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value)
-              }}
-              name="name"
+              {...formik.getFieldProps("name")}
               autoComplete="name"
               autoFocus
               sx={{ backgroundColor: "white" }}
@@ -104,37 +140,36 @@ export const EditStudentForm = ({
                 style: { color: "darkblue" },
               }}
             />
+
+            {formik.touched.name && formik.errors.name ? (
+              <div>{formik.errors.name}</div>
+            ) : null}
             <TextField
               backgroundColor={"white"}
               margin="normal"
-              required
               fullWidth
               value={roll}
               id="roll"
-              onChange={(e) => {
-                setRoll(e.target.value)
-              }}
               label="Roll Number"
-              name="roll"
               autoComplete="roll"
+              {...formik.getFieldProps("roll")}
               autoFocus
               sx={{ backgroundColor: "white" }}
               InputLabelProps={{
                 style: { color: "darkblue" },
               }}
             />
+            {formik.touched.roll && formik.errors.roll ? (
+              <div>{formik.errors.roll}</div>
+            ) : null}
             <TextField
               backgroundColor={"white"}
               margin="normal"
-              required
               value={department}
               fullWidth
-              onChange={(e) => {
-                setDepartment(e.target.value)
-              }}
               id="department"
               label="Department"
-              name="department"
+              {...formik.getFieldProps("department")}
               autoComplete="department"
               autoFocus
               sx={{ backgroundColor: "white" }}
@@ -142,18 +177,16 @@ export const EditStudentForm = ({
                 style: { color: "darkblue" },
               }}
             />
+            {formik.touched.department && formik.errors.department ? (
+              <div>{formik.errors.department}</div>
+            ) : null}
             <TextField
               backgroundColor={"white"}
               margin="normal"
-              required
               fullWidth
               id="school"
-              value={school}
+              {...formik.getFieldProps("school")}
               label="School"
-              onChange={(e) => {
-                setSchool(e.target.value)
-              }}
-              name="school"
               autoComplete="school"
               autoFocus
               sx={{ backgroundColor: "white" }}
@@ -161,7 +194,9 @@ export const EditStudentForm = ({
                 style: { color: "darkblue" },
               }}
             />
-
+            {formik.touched.school && formik.errors.school ? (
+              <div>{formik.errors.school}</div>
+            ) : null}
             <FormGroup>
               <FormControlLabel
                 control={
@@ -202,7 +237,7 @@ export const EditStudentForm = ({
               variant="contained"
               sx={{ backgroundColor: "green", mt: 3, mb: 2 }}
             >
-              Submit
+              Update
             </Button>
           </Box>
         </Box>

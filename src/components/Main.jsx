@@ -60,7 +60,7 @@ export const Main = () => {
     {
       id: 1,
       name: "Robin Sharma",
-      roll: "12000",
+      roll: "120000000",
       gender: "Male",
       department: "Science",
       school: "BAF SEMS",
@@ -68,15 +68,15 @@ export const Main = () => {
     {
       id: 2,
       name: "Jack Roberts",
-      roll: "12008",
-      gender: "Fale",
+      roll: "12000008",
+      gender: "Male",
       department: "Science",
       school: "BAF SEMS",
     },
     {
       id: 3,
       name: "Kale Hashuna",
-      roll: "12009",
+      roll: "120090000",
       gender: "Male",
       department: "Science",
       school: "BAF SEMS",
@@ -84,7 +84,7 @@ export const Main = () => {
     {
       id: 4,
       name: "Terakota Mules",
-      roll: "12001",
+      roll: "120010000",
       gender: "Female",
       department: "Geography",
       school: "Notordam",
@@ -92,7 +92,7 @@ export const Main = () => {
     {
       id: 5,
       name: "Meckhi Saho",
-      roll: "12002",
+      roll: "120020000",
       gender: "Female",
       department: "Economics",
       school: "BAF SEMS",
@@ -100,10 +100,10 @@ export const Main = () => {
     {
       id: 6,
       name: "Topuac Chandra",
-      roll: "12003",
+      roll: "120030000",
       gender: "Male",
       department: "Science",
-      school: "SFX",
+      school: "SFX Green Herald",
     },
   ])
   const [open, setOpen] = useState(false)
