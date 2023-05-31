@@ -139,13 +139,16 @@ export const Main = () => {
   const [school, setSchool] = useState("")
   const [filteredList, setFilteredList] = new useState(students)
 
-  const handleGender = (e) => {
-    setGender(!gender)
-    if (gender === true) {
-      setGenderStr("Male")
-    } else {
-      setGenderStr("Female")
-    }
+  const handleGenderMale = (e) => {
+    setGender(true)
+
+    setGenderStr("Male")
+  }
+
+  const handleGenderFemale = (e) => {
+    setGender(false)
+
+    setGenderStr("Female")
   }
 
   const deleteStudent = (id) => {
@@ -389,7 +392,7 @@ export const Main = () => {
                     control={
                       <Checkbox
                         checked={gender}
-                        onChange={handleGender}
+                        onChange={handleGenderMale}
                         name="male"
                       />
                     }
@@ -400,7 +403,7 @@ export const Main = () => {
                     control={
                       <Checkbox
                         checked={!gender}
-                        onChange={handleGender}
+                        onChange={handleGenderFemale}
                         name="female"
                       />
                     }
