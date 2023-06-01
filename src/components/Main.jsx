@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Pets, Mail, Notifications } from '@mui/icons-material/'
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt'
 import InfoIcon from '@mui/icons-material/Info'
@@ -56,56 +56,7 @@ const UserBox = styled(Box)(({ theme }) => ({
 }))
 
 export const Main = () => {
-  const [students, setStudents] = useState([
-    {
-      id: 1,
-      name: 'Robin Sharma',
-      roll: '120000000',
-      gender: 'Male',
-      department: 'Science',
-      school: 'BAF SEMS',
-    },
-    {
-      id: 2,
-      name: 'Jack Roberts',
-      roll: '120000089',
-      gender: 'Male',
-      department: 'Science',
-      school: 'BAF SEMS',
-    },
-    {
-      id: 3,
-      name: 'Kale Hashuna',
-      roll: '120090000',
-      gender: 'Male',
-      department: 'Science',
-      school: 'BAF SEMS',
-    },
-    {
-      id: 4,
-      name: 'Terakota Mules',
-      roll: '120010000',
-      gender: 'Female',
-      department: 'Geography',
-      school: 'Notordam',
-    },
-    {
-      id: 5,
-      name: 'Meckhi Saho',
-      roll: '120020000',
-      gender: 'Female',
-      department: 'Economics',
-      school: 'BAF SEMS',
-    },
-    {
-      id: 6,
-      name: 'Topuac Chandra',
-      roll: '120030000',
-      gender: 'Male',
-      department: 'Science',
-      school: 'SFX Green Herald',
-    },
-  ])
+  const [students, setStudents] = useState([])
   const [open, setOpen] = useState(false)
   const [openAbout, setOpenAbout] = useState(false)
   const [showAdd, setShowAdd] = useState(false)
@@ -120,20 +71,75 @@ export const Main = () => {
   const [filteredList, setFilteredList] = useState(students)
   const [currentStudent, setCurrentStudent] = useState(null)
 
-  const EditStudent = (id, name, roll, genderStr, department, school) => {
-    setStudents(
-      students.map((student) => {
-        if (student.id == id) {
-          student.name = name
-          student.roll = roll
-          student.gender = genderStr
-          student.department = department
-          student.school = school
-        }
-        return student
-      })
-    )
+  useEffect(() => {
+    const getStudents = async () => {
+      const studentsFromServer = await fetchStudents()
+      setStudents(studentsFromServer)
+      setFilteredList(students)
+      // console.log(studentsFromServer)
+    }
+    getStudents()
+  }, [students])
 
+  const fetchStudents = async () => {
+    const res = await fetch('http://localhost:5000/students')
+    const data = res.json()
+    return data
+  }
+
+  const fetchStudent = async (id) => {
+    const res = await fetch(`http://localhost:5000/students/${id}`)
+    const data = res.json()
+    return data
+  }
+
+  const deleteStudent = async (id) => {
+    if (window.confirm('Are you sure?') == true) {
+      await fetch(`http://localhost:5000/students/${id}`, {
+        method: 'DELETE',
+      })
+      setStudents(students.filter((student) => student.id !== id))
+      setFilteredList(students)
+    } else {
+      // do nothing
+    }
+  }
+
+  const EditStudent = async (id, name, roll, genderStr, department, school) => {
+    const studentToUpdate = await fetchStudent(id)
+    const updatedStudent = {
+      ...studentToUpdate,
+      name: name,
+      roll: roll,
+      gender: genderStr,
+      department: department,
+      school: school,
+    }
+
+    const res = await fetch(`http://localhost:5000/students/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(updatedStudent),
+    })
+
+    const data = await res.json()
+
+    setStudents(
+      students.map((student) =>
+        student.id === id
+          ? {
+              ...student,
+              name: name,
+              roll: roll,
+              gender: genderStr,
+              department: department,
+              school: school,
+            }
+          : student
+      )
+    )
     setFilteredList(students)
 
     setShowEdit(false)
@@ -155,33 +161,10 @@ export const Main = () => {
     setGenderStr('Female')
   }
 
-  const deleteStudent = (id) => {
-    if (window.confirm('Are you sure?') == true) {
-      const newList = students.filter((student) => {
-        return student.id !== id
-      })
-      console.log(newList)
-      setStudents(newList)
-      setFilteredList(newList)
-    } else {
-      // do nothing
-    }
-  }
-
-  const AddStudent = (name, roll, school, department) => {
+  const AddStudent = async (name, roll, school, department) => {
     // e.preventDefault()
-    const studentsStored = students.sort(function (a, b) {
-      if (a.id < b.id) {
-        return -1
-      } else if (b.id < a.id) {
-        return 1
-      } else {
-        return 0
-      }
-    })
 
     const newStudent = {
-      id: studentsStored[studentsStored.length - 1].id + 1,
       name: name,
       roll: roll,
       gender: genderStr,
@@ -189,8 +172,17 @@ export const Main = () => {
       school: school,
     }
 
+    const res = await fetch('http://localhost:5000/students', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(newStudent),
+    })
+
     setStudents([...students, newStudent])
     setFilteredList([...students, newStudent])
+
     setName('')
     setRoll('')
     setDepartment('')

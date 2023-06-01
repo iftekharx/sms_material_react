@@ -1,0 +1,44 @@
+{
+  "students": [
+    {
+      "id": 2,
+      "name": "Jack Roberts Updated",
+      "roll": "120000089",
+      "gender": "Male",
+      "department": "Science",
+      "school": "BAF SEMS"
+    },
+    {
+      "id": 4,
+      "name": "Tuna",
+      "roll": "121000089",
+      "gender": "Female",
+      "department": "Science",
+      "school": "SFX Green Herald"
+    },
+    {
+      "id": 5,
+      "name": "Sonders Kacca",
+      "roll": "130000089",
+      "gender": "Female",
+      "department": "Science",
+      "school": "Holy Cross"
+    },
+    {
+      "id": 6,
+      "name": "Kidda Roberts",
+      "roll": "140000089",
+      "gender": "Female",
+      "department": "History",
+      "school": "Saint Joseph"
+    },
+    {
+      "name": "Rahim Kuku Updated",
+      "roll": "323433333",
+      "gender": "Male",
+      "department": "sdasdas",
+      "school": "asdasdassda",
+      "id": 7
+    }
+  ]
+}
