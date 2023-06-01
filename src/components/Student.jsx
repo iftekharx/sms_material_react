@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import {
   Button,
   Card,
@@ -11,24 +11,24 @@ import {
   FormGroup,
   Modal,
   styled,
-} from "@mui/material"
-import CloseIcon from "@mui/icons-material/Close"
-import { useState } from "react"
+} from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import { useState } from 'react'
 
 export const Student = ({ student, onDelete, onEdit, setCurrentStudent }) => {
   const [showDetails, setShowDetails] = useState(false)
 
   return (
-    <Grid item key={student} xs={12} sm={6} md={4}>
+    <Grid item xs={12} sm={6} md={4}>
       <Card
         sx={{
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          color: "black",
-          backgroundColor: "white",
-          border: "2px solid black",
-          borderRadius: "5px",
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          color: 'black',
+          backgroundColor: 'white',
+          border: '2px solid black',
+          borderRadius: '5px',
         }}
       >
         <CardContent sx={{ flexGrow: 1 }}>
@@ -52,16 +52,16 @@ export const Student = ({ student, onDelete, onEdit, setCurrentStudent }) => {
         </CardContent>
         <CardActions>
           <Button
-            sx={{ color: "black" }}
+            sx={{ color: 'black' }}
             size="small"
             onClick={() => {
               setShowDetails(!showDetails)
             }}
           >
-            {showDetails ? "Hide" : "View"}
+            {showDetails ? 'Hide' : 'View'}
           </Button>
           <Button
-            sx={{ color: "black" }}
+            sx={{ color: 'black' }}
             size="small"
             onClick={() => {
               setCurrentStudent(student)
@@ -73,7 +73,7 @@ export const Student = ({ student, onDelete, onEdit, setCurrentStudent }) => {
           <Button
             onClick={() => onDelete(student.id)}
             startIcon={<CloseIcon />}
-            sx={{ color: "red" }}
+            sx={{ color: 'red' }}
             size="small"
           >
             Delete
