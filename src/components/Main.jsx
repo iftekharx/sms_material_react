@@ -305,8 +305,9 @@ export const Main = () => {
         </Typography>
 
         <Grid container spacing={4}>
-          {filteredList.map((student) => (
+          {filteredList.map((student, index) => (
             <Student
+              key={index}
               onDelete={() => {
                 deleteStudent(student.id)
               }}
