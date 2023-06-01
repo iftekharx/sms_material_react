@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import {
   TextField,
   Typography,
@@ -10,28 +10,28 @@ import {
   Button,
   FormGroup,
   Grow,
-} from "@mui/material"
-import { useFormik } from "formik"
-import * as Yup from "yup"
+} from '@mui/material'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
 const AddStudentSchema = Yup.object().shape({
   name: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
   roll: Yup.string()
-    .min(9, "Roll number must be 9 digit atleast")
-    .max(9, "Roll number must not be more than 9 digits")
-    .matches("[0-9]+", "Only digits allowed")
-    .required("Required"),
+    .min(9, 'Roll number must be 9 digit atleast')
+    .max(9, 'Roll number must not be more than 9 digits')
+    .matches('^[0-9]*$', 'Only digits allowed')
+    .required('Required'),
   school: Yup.string()
-    .min(5, "Too Short!")
-    .max(100, "Too Long!")
-    .required("Required"),
+    .min(5, 'Too Short!')
+    .max(100, 'Too Long!')
+    .required('Required'),
   department: Yup.string()
-    .min(5, "Too Short!")
-    .max(100, "Too Long!")
-    .required("Required"),
+    .min(5, 'Too Short!')
+    .max(100, 'Too Long!')
+    .required('Required'),
 })
 
 export const AddStudentForm = ({
@@ -43,10 +43,10 @@ export const AddStudentForm = ({
 }) => {
   const formik = useFormik({
     initialValues: {
-      name: "",
-      roll: "",
-      school: "",
-      department: "",
+      name: '',
+      roll: '',
+      school: '',
+      department: '',
     },
     validationSchema: AddStudentSchema,
     onSubmit: (values) => {
@@ -62,20 +62,20 @@ export const AddStudentForm = ({
   return (
     <Grow
       in={showAdd}
-      style={{ transformOrigin: "0 0 0" }}
+      style={{ transformOrigin: '0 0 0' }}
       {...(showAdd ? { timeout: 1000 } : {})}
     >
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
             marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            backgroundColor: "#86B3CA",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            backgroundColor: '#86B3CA',
           }}
         >
-          <Typography component="h1" variant="h5" color={"black"}>
+          <Typography component="h1" variant="h5" color={'black'}>
             Add Student
           </Typography>
           <Box
@@ -84,68 +84,68 @@ export const AddStudentForm = ({
             sx={{ mt: 1, p: 5 }}
           >
             <TextField
-              backgroundColor={"white"}
+              backgroundColor={'white'}
               margin="normal"
               fullWidth
               id="name"
-              {...formik.getFieldProps("name")}
+              {...formik.getFieldProps('name')}
               label="Name"
               autoComplete="name"
               autoFocus
-              sx={{ backgroundColor: "white" }}
+              sx={{ backgroundColor: 'white' }}
               InputLabelProps={{
-                style: { color: "darkblue" },
+                style: { color: 'darkblue' },
               }}
             />
             {formik.touched.name && formik.errors.name ? (
               <div>{formik.errors.name}</div>
             ) : null}
             <TextField
-              backgroundColor={"white"}
+              backgroundColor={'white'}
               margin="normal"
               fullWidth
               id="roll"
-              {...formik.getFieldProps("roll")}
+              {...formik.getFieldProps('roll')}
               label="Roll Number"
               autoComplete="roll"
               autoFocus
-              sx={{ backgroundColor: "white" }}
+              sx={{ backgroundColor: 'white' }}
               InputLabelProps={{
-                style: { color: "darkblue" },
+                style: { color: 'darkblue' },
               }}
             />
             {formik.touched.roll && formik.errors.roll ? (
               <div>{formik.errors.roll}</div>
             ) : null}
             <TextField
-              backgroundColor={"white"}
+              backgroundColor={'white'}
               margin="normal"
               fullWidth
-              {...formik.getFieldProps("department")}
+              {...formik.getFieldProps('department')}
               id="department"
               label="Department"
               autoComplete="department"
               autoFocus
-              sx={{ backgroundColor: "white" }}
+              sx={{ backgroundColor: 'white' }}
               InputLabelProps={{
-                style: { color: "darkblue" },
+                style: { color: 'darkblue' },
               }}
             />
             {formik.touched.department && formik.errors.department ? (
               <div>{formik.errors.department}</div>
             ) : null}
             <TextField
-              backgroundColor={"white"}
+              backgroundColor={'white'}
               margin="normal"
               fullWidth
               id="school"
               label="School"
-              {...formik.getFieldProps("school")}
+              {...formik.getFieldProps('school')}
               autoComplete="school"
               autoFocus
-              sx={{ backgroundColor: "white" }}
+              sx={{ backgroundColor: 'white' }}
               InputLabelProps={{
-                style: { color: "darkblue" },
+                style: { color: 'darkblue' },
               }}
             />
             {formik.touched.school && formik.errors.school ? (
@@ -162,7 +162,7 @@ export const AddStudentForm = ({
                   />
                 }
                 label="Male"
-                sx={{ color: "black" }}
+                sx={{ color: 'black' }}
               />
               <FormControlLabel
                 control={
@@ -172,7 +172,7 @@ export const AddStudentForm = ({
                     name="female"
                   />
                 }
-                sx={{ color: "black" }}
+                sx={{ color: 'black' }}
                 label="Female"
               />
             </FormGroup>
@@ -181,7 +181,7 @@ export const AddStudentForm = ({
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ backgroundColor: "darkred", mt: 3, mb: 2 }}
+              sx={{ backgroundColor: 'darkred', mt: 3, mb: 2 }}
             >
               Add Student
             </Button>
