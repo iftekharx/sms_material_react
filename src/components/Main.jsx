@@ -71,15 +71,23 @@ export const Main = () => {
   const [filteredList, setFilteredList] = useState(students)
   const [currentStudent, setCurrentStudent] = useState(null)
 
+  const getStudents = async () => {
+    const studentsFromServer = await fetchStudents()
+    setStudents(studentsFromServer)
+    setFilteredList(studentsFromServer)
+    // console.log(studentsFromServer)
+  }
+
   useEffect(() => {
     const getStudents = async () => {
       const studentsFromServer = await fetchStudents()
       setStudents(studentsFromServer)
-      setFilteredList(students)
+
+      setFilteredList(studentsFromServer)
       // console.log(studentsFromServer)
     }
     getStudents()
-  }, [students])
+  }, [])
 
   const fetchStudents = async () => {
     const res = await fetch('http://localhost:5000/students')
@@ -98,6 +106,7 @@ export const Main = () => {
       await fetch(`http://localhost:5000/students/${id}`, {
         method: 'DELETE',
       })
+      getStudents()
       setStudents(students.filter((student) => student.id !== id))
       setFilteredList(students)
     } else {
@@ -124,23 +133,23 @@ export const Main = () => {
       body: JSON.stringify(updatedStudent),
     })
 
-    const data = await res.json()
+    // const data = await res.json()
 
-    setStudents(
-      students.map((student) =>
-        student.id === id
-          ? {
-              ...student,
-              name: name,
-              roll: roll,
-              gender: genderStr,
-              department: department,
-              school: school,
-            }
-          : student
-      )
-    )
-    setFilteredList(students)
+    // setStudents(
+    //   students.map((student) =>
+    //     student.id === id
+    //       ? {
+    //           ...student,
+    //           name: name,
+    //           roll: roll,
+    //           gender: genderStr,
+    //           department: department,
+    //           school: school,
+    //         }
+    //       : student
+    //   )
+    // )
+    getStudents()
 
     setShowEdit(false)
   }
@@ -180,7 +189,8 @@ export const Main = () => {
       body: JSON.stringify(newStudent),
     })
 
-    setStudents([...students, newStudent])
+    getStudents()
+
     setFilteredList([...students, newStudent])
 
     setName('')
