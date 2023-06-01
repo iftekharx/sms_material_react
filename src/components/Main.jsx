@@ -1,11 +1,11 @@
-import React from "react"
-import { Pets, Mail, Notifications } from "@mui/icons-material/"
-import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt"
-import InfoIcon from "@mui/icons-material/Info"
-import DataObjectIcon from "@mui/icons-material/DataObject"
-import { Button, ButtonGroup, Modal, styled } from "@mui/material"
-import { Student } from "./Student"
-import { AddStudentForm } from "./AddStudentForm"
+import React from 'react'
+import { Pets, Mail, Notifications } from '@mui/icons-material/'
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt'
+import InfoIcon from '@mui/icons-material/Info'
+import DataObjectIcon from '@mui/icons-material/DataObject'
+import { Button, ButtonGroup, Modal, styled } from '@mui/material'
+import { Student } from './Student'
+import { AddStudentForm } from './AddStudentForm'
 
 import {
   AppBar,
@@ -17,41 +17,41 @@ import {
   MenuItem,
   Toolbar,
   Typography,
-} from "@mui/material"
+} from '@mui/material'
 
-import MenuIcon from "@mui/icons-material/Menu"
-import { useState } from "react"
-import { EditStudentForm } from "./EditStudentForm"
-import { AboutModal } from "./AboutModal"
+import MenuIcon from '@mui/icons-material/Menu'
+import { useState } from 'react'
+import { EditStudentForm } from './EditStudentForm'
+import { AboutModal } from './AboutModal'
 
 const StyledToolbar = styled(Toolbar)({
-  display: "flex",
-  backgroundColor: "coral",
-  justifyContent: "space-between",
+  display: 'flex',
+  backgroundColor: 'coral',
+  justifyContent: 'space-between',
 })
 
-const Search = styled("div")(({ theme }) => ({
-  backgroundColor: "white",
-  padding: "0 10px",
+const Search = styled('div')(({ theme }) => ({
+  backgroundColor: 'white',
+  padding: '0 10px',
   borderRadius: theme.shape.borderRadius,
-  width: "40%",
+  width: '40%',
 }))
 
 const Icons = styled(Box)(({ theme }) => ({
-  display: "none",
-  alignItems: "center",
-  gap: "20px",
-  [theme.breakpoints.up("sm")]: {
-    display: "flex",
+  display: 'none',
+  alignItems: 'center',
+  gap: '20px',
+  [theme.breakpoints.up('sm')]: {
+    display: 'flex',
   },
 }))
 
 const UserBox = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  gap: "10px",
-  [theme.breakpoints.up("sm")]: {
-    display: "none",
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  [theme.breakpoints.up('sm')]: {
+    display: 'none',
   },
 }))
 
@@ -59,51 +59,51 @@ export const Main = () => {
   const [students, setStudents] = useState([
     {
       id: 1,
-      name: "Robin Sharma",
-      roll: "120000000",
-      gender: "Male",
-      department: "Science",
-      school: "BAF SEMS",
+      name: 'Robin Sharma',
+      roll: '120000000',
+      gender: 'Male',
+      department: 'Science',
+      school: 'BAF SEMS',
     },
     {
       id: 2,
-      name: "Jack Roberts",
-      roll: "120000089",
-      gender: "Male",
-      department: "Science",
-      school: "BAF SEMS",
+      name: 'Jack Roberts',
+      roll: '120000089',
+      gender: 'Male',
+      department: 'Science',
+      school: 'BAF SEMS',
     },
     {
       id: 3,
-      name: "Kale Hashuna",
-      roll: "120090000",
-      gender: "Male",
-      department: "Science",
-      school: "BAF SEMS",
+      name: 'Kale Hashuna',
+      roll: '120090000',
+      gender: 'Male',
+      department: 'Science',
+      school: 'BAF SEMS',
     },
     {
       id: 4,
-      name: "Terakota Mules",
-      roll: "120010000",
-      gender: "Female",
-      department: "Geography",
-      school: "Notordam",
+      name: 'Terakota Mules',
+      roll: '120010000',
+      gender: 'Female',
+      department: 'Geography',
+      school: 'Notordam',
     },
     {
       id: 5,
-      name: "Meckhi Saho",
-      roll: "120020000",
-      gender: "Female",
-      department: "Economics",
-      school: "BAF SEMS",
+      name: 'Meckhi Saho',
+      roll: '120020000',
+      gender: 'Female',
+      department: 'Economics',
+      school: 'BAF SEMS',
     },
     {
       id: 6,
-      name: "Topuac Chandra",
-      roll: "120030000",
-      gender: "Male",
-      department: "Science",
-      school: "SFX Green Herald",
+      name: 'Topuac Chandra',
+      roll: '120030000',
+      gender: 'Male',
+      department: 'Science',
+      school: 'SFX Green Herald',
     },
   ])
   const [open, setOpen] = useState(false)
@@ -111,12 +111,12 @@ export const Main = () => {
   const [showAdd, setShowAdd] = useState(false)
   const [showEdit, setShowEdit] = useState(false)
 
-  const [name, setName] = useState("")
-  const [roll, setRoll] = useState("")
+  const [name, setName] = useState('')
+  const [roll, setRoll] = useState('')
   const [gender, setGender] = useState(true)
-  const [genderStr, setGenderStr] = useState("Male")
-  const [department, setDepartment] = useState("")
-  const [school, setSchool] = useState("")
+  const [genderStr, setGenderStr] = useState('Male')
+  const [department, setDepartment] = useState('')
+  const [school, setSchool] = useState('')
   const [filteredList, setFilteredList] = useState(students)
   const [currentStudent, setCurrentStudent] = useState(null)
 
@@ -146,19 +146,19 @@ export const Main = () => {
   const handleGenderMale = (e) => {
     setGender(true)
 
-    setGenderStr("Male")
+    setGenderStr('Male')
   }
 
   const handleGenderFemale = (e) => {
     setGender(false)
 
-    setGenderStr("Female")
+    setGenderStr('Female')
   }
 
   const deleteStudent = (id) => {
-    if (window.confirm("Are you sure?") == true) {
+    if (window.confirm('Are you sure?') == true) {
       const newList = students.filter((student) => {
-        return student.id != id
+        return student.id !== id
       })
       console.log(newList)
       setStudents(newList)
@@ -191,10 +191,10 @@ export const Main = () => {
 
     setStudents([...students, newStudent])
     setFilteredList([...students, newStudent])
-    setName("")
-    setRoll("")
-    setDepartment("")
-    setSchool("")
+    setName('')
+    setRoll('')
+    setDepartment('')
+    setSchool('')
   }
 
   const filterBySearch = (event) => {
@@ -220,11 +220,11 @@ export const Main = () => {
         <StyledToolbar>
           <Typography
             variant="h6"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{ display: { xs: 'none', sm: 'block' } }}
           >
             SMS
           </Typography>
-          <DataObjectIcon sx={{ display: { xs: "block", sm: "none" } }} />
+          <DataObjectIcon sx={{ display: { xs: 'block', sm: 'none' } }} />
           <Search>
             <InputBase placeholder="search..." onChange={filterBySearch} />
           </Search>
@@ -234,20 +234,20 @@ export const Main = () => {
                 setShowAdd(!showAdd)
               }}
               sx={{
-                color: "white",
-                cursor: "pointer",
+                color: 'white',
+                cursor: 'pointer',
               }}
             />
             <InfoIcon
               onClick={() => OpenAbout()}
               sx={{
-                cursor: "pointer",
-                color: "white",
+                cursor: 'pointer',
+                color: 'white',
               }}
             />
           </Icons>
           <UserBox onClick={(e) => setOpen(true)}>
-            <MenuIcon sx={{ color: "white" }} />
+            <MenuIcon sx={{ color: 'white' }} />
           </UserBox>
         </StyledToolbar>
 
@@ -257,12 +257,12 @@ export const Main = () => {
           open={open}
           onClose={(e) => setOpen(false)}
           anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
+            vertical: 'top',
+            horizontal: 'right',
           }}
           transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
+            vertical: 'top',
+            horizontal: 'right',
           }}
         >
           <MenuItem
@@ -300,7 +300,7 @@ export const Main = () => {
       )}
       <Container sx={{ py: 8 }} maxWidth="md">
         {/* End hero unit */}
-        <Typography variant={"h3"} mb={10} textAlign={"center"}>
+        <Typography variant={'h3'} mb={10} textAlign={'center'}>
           Students
         </Typography>
 
