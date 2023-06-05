@@ -6,7 +6,6 @@ import DataObjectIcon from '@mui/icons-material/DataObject'
 import { Button, ButtonGroup, Modal, styled } from '@mui/material'
 import { Student } from './Student'
 import { AddStudentForm } from './AddStudentForm'
-
 import {
   AppBar,
   Box,
@@ -20,7 +19,7 @@ import {
 } from '@mui/material'
 
 import MenuIcon from '@mui/icons-material/Menu'
-import { useState } from 'react'
+import { useState, useContext, createContext } from 'react'
 import { EditStudentForm } from './EditStudentForm'
 import { AboutModal } from './AboutModal'
 
@@ -54,7 +53,7 @@ const UserBox = styled(Box)(({ theme }) => ({
     display: 'none',
   },
 }))
-
+export const studentDetailsContext = createContext()
 export const Main = () => {
   const [students, setStudents] = useState([
     {
@@ -123,7 +122,7 @@ export const Main = () => {
   const EditStudent = (id, name, roll, genderStr, department, school) => {
     setStudents(
       students.map((student) => {
-        if (student.id == id) {
+        if (student.id === id) {
           student.name = name
           student.roll = roll
           student.gender = genderStr
@@ -214,6 +213,7 @@ export const Main = () => {
     setOpenAbout(true)
     console.log(openAbout)
   }
+
   return (
     <>
       <AppBar position="sticky">
@@ -306,17 +306,12 @@ export const Main = () => {
 
         <Grid container spacing={4}>
           {filteredList.map((student, index) => (
-            <Student
+            <studentDetailsContext.Provider
               key={index}
-              onDelete={() => {
-                deleteStudent(student.id)
-              }}
-              student={student}
-              setCurrentStudent={() => {
-                setCurrentStudent(student)
-              }}
-              onEdit={onEdit}
-            />
+              value={[student, deleteStudent, onEdit, setCurrentStudent]}
+            >
+              <Student />
+            </studentDetailsContext.Provider>
           ))}
         </Grid>
       </Container>

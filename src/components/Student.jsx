@@ -13,9 +13,14 @@ import {
   styled,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { studentDetailsContext } from './Main'
 
-export const Student = ({ student, onDelete, onEdit, setCurrentStudent }) => {
+export const Student = () => {
+  const [student, deleteStudent, onEdit, setCurrentStudent] = useContext(
+    studentDetailsContext
+  )
+
   const [showDetails, setShowDetails] = useState(false)
 
   return (
@@ -71,7 +76,7 @@ export const Student = ({ student, onDelete, onEdit, setCurrentStudent }) => {
             Edit
           </Button>
           <Button
-            onClick={() => onDelete(student.id)}
+            onClick={() => deleteStudent(student.id)}
             startIcon={<CloseIcon />}
             sx={{ color: 'red' }}
             size="small"
