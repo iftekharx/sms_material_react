@@ -2,15 +2,10 @@ import React from 'react'
 import {
   Button,
   Card,
-  CardMedia,
   CardContent,
   CardActions,
   Grid,
   Typography,
-  ButtonGroup,
-  FormGroup,
-  Modal,
-  styled,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useState, useContext } from 'react'

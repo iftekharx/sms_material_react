@@ -1,9 +1,8 @@
 import React from 'react'
-import { Pets, Mail, Notifications } from '@mui/icons-material/'
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt'
 import InfoIcon from '@mui/icons-material/Info'
 import DataObjectIcon from '@mui/icons-material/DataObject'
-import { Button, ButtonGroup, Modal, styled } from '@mui/material'
+import { styled } from '@mui/material'
 import { Student } from './Student'
 import { AddStudentForm } from './AddStudentForm'
 import {
@@ -19,7 +18,7 @@ import {
 } from '@mui/material'
 
 import MenuIcon from '@mui/icons-material/Menu'
-import { useState, useContext, createContext } from 'react'
+import { useState, createContext } from 'react'
 import { EditStudentForm } from './EditStudentForm'
 import { AboutModal } from './AboutModal'
 
@@ -54,6 +53,7 @@ const UserBox = styled(Box)(({ theme }) => ({
   },
 }))
 export const studentDetailsContext = createContext()
+
 export const Main = () => {
   const [students, setStudents] = useState([
     {
