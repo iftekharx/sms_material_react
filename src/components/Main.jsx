@@ -269,16 +269,15 @@ export const Main = () => {
               <MenuItem>Add Student</MenuItem>
             </Link>
 
-            <Link to="/">
-              <MenuItem>Hide Add Panel</MenuItem>
+            <Link to="/about">
+              <MenuItem
+                onClick={() => {
+                  setOpenAbout(true)
+                }}
+              >
+                About
+              </MenuItem>
             </Link>
-            <MenuItem
-              onClick={() => {
-                setOpenAbout(true)
-              }}
-            >
-              About
-            </MenuItem>
           </Menu>
         </AppBar>
         <Routes>
