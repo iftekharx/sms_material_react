@@ -7,12 +7,15 @@ import {
   Checkbox,
   Box,
   Button,
+  Alert,
   FormGroup,
+  Grid,
   Grow,
 } from '@mui/material'
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { Link } from 'react-router-dom'
 
 const AddStudentSchema = Yup.object().shape({
   name: Yup.string()
@@ -34,15 +37,11 @@ const AddStudentSchema = Yup.object().shape({
     .required('Required'),
 })
 
-export const EditStudentForm = ({
-  showEdit,
-  EditStudent,
-  student,
-  CloseEdit,
-}) => {
+export const EditStudentForm = ({ EditStudent, student }) => {
   const [id, setId] = useState(student.id)
   const [name, setName] = useState(student.name)
   const [roll, setRoll] = useState(student.roll)
+  const [message, setMessage] = useState('...')
 
   const [gender, setGender] = useState(student.gender === 'Male' ? true : false)
   const [genderStr, setGenderStr] = useState(
@@ -82,34 +81,38 @@ export const EditStudentForm = ({
       setDepartment(values.department)
 
       EditStudent(id, name, roll, genderStr, department, school)
-      CloseEdit()
+      setMessage('Student Successfully Added! :)')
     },
   })
 
   return (
-    <Grow
-      in={showEdit}
-      style={{ transformOrigin: '0 0 0' }}
-      {...(showEdit ? { timeout: 1000 } : {})}
-    >
-      <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            backgroundColor: '#86B3CA',
-          }}
+    <Container component="main" maxWidth="md">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          maxWidth: 'md',
+          flexDirection: 'column',
+          alignItems: 'center',
+          backgroundColor: '#e1f5ba',
+          border: '2px solid black',
+        }}
+      >
+        <Typography component="h1" variant="h5" color={'black'}>
+          Edit Student
+        </Typography>
+
+        <Grid
+          container
+          component="form"
+          onSubmit={formik.handleSubmit}
+          spacing={5}
+          sx={{ mt: 1, p: 5 }}
         >
-          <Typography component="h1" variant="h5" color={'black'}>
-            Edit Student
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={formik.handleSubmit}
-            sx={{ mt: 1, p: 5 }}
-          >
+          <Grid item xs={12} md={12}>
+            <Alert severity="info">{message}</Alert>
+          </Grid>
+          <Grid item xs={12} md={4}>
             <TextField
               backgroundColor={'white'}
               margin="normal"
@@ -125,6 +128,8 @@ export const EditStudentForm = ({
                 style: { color: 'darkblue' },
               }}
             />
+          </Grid>
+          <Grid item xs={12} md={4}>
             <TextField
               backgroundColor={'white'}
               margin="normal"
@@ -143,6 +148,8 @@ export const EditStudentForm = ({
             {formik.touched.name && formik.errors.name ? (
               <div>{formik.errors.name}</div>
             ) : null}
+          </Grid>
+          <Grid item xs={12} md={4}>
             <TextField
               backgroundColor={'white'}
               margin="normal"
@@ -161,6 +168,8 @@ export const EditStudentForm = ({
             {formik.touched.roll && formik.errors.roll ? (
               <div>{formik.errors.roll}</div>
             ) : null}
+          </Grid>
+          <Grid item xs={12} md={4}>
             <TextField
               backgroundColor={'white'}
               margin="normal"
@@ -179,6 +188,9 @@ export const EditStudentForm = ({
             {formik.touched.department && formik.errors.department ? (
               <div>{formik.errors.department}</div>
             ) : null}
+          </Grid>
+
+          <Grid item xs={12} md={4}>
             <TextField
               backgroundColor={'white'}
               margin="normal"
@@ -196,6 +208,8 @@ export const EditStudentForm = ({
             {formik.touched.school && formik.errors.school ? (
               <div>{formik.errors.school}</div>
             ) : null}
+          </Grid>
+          <Grid item xs={12} md={4}>
             <FormGroup>
               <FormControlLabel
                 control={
@@ -220,16 +234,21 @@ export const EditStudentForm = ({
                 label="Female"
               />
             </FormGroup>
+          </Grid>
 
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ backgroundColor: 'gray', mt: 3, mb: 2 }}
-              onClick={() => CloseEdit()}
-            >
-              Close
-            </Button>
+          <Grid item xs={12} md={4}>
+            <Link to="/">
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{ backgroundColor: 'gray', mt: 3, mb: 2 }}
+              >
+                Go Back
+              </Button>
+            </Link>
+          </Grid>
 
+          <Grid item xs={12} md={4}>
             <Button
               type="submit"
               fullWidth
@@ -238,9 +257,9 @@ export const EditStudentForm = ({
             >
               Update
             </Button>
-          </Box>
-        </Box>
-      </Container>
-    </Grow>
+          </Grid>
+        </Grid>
+      </Box>
+    </Container>
   )
 }

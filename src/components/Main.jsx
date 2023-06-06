@@ -5,6 +5,13 @@ import DataObjectIcon from '@mui/icons-material/DataObject'
 import { styled } from '@mui/material'
 import { Student } from './Student'
 import { AddStudentForm } from './AddStudentForm'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import Typography from '@mui/material/Typography'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+
 import {
   AppBar,
   Box,
@@ -14,7 +21,6 @@ import {
   Menu,
   MenuItem,
   Toolbar,
-  Typography,
 } from '@mui/material'
 
 import MenuIcon from '@mui/icons-material/Menu'
@@ -24,7 +30,7 @@ import { AboutModal } from './AboutModal'
 
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
-  backgroundColor: 'coral',
+  backgroundColor: 'darkblue',
   justifyContent: 'space-between',
 })
 
@@ -107,8 +113,6 @@ export const Main = () => {
   ])
   const [open, setOpen] = useState(false)
   const [openAbout, setOpenAbout] = useState(false)
-  const [showAdd, setShowAdd] = useState(false)
-  const [showEdit, setShowEdit] = useState(false)
 
   const [name, setName] = useState('')
   const [roll, setRoll] = useState('')
@@ -134,12 +138,6 @@ export const Main = () => {
     )
 
     setFilteredList(students)
-
-    setShowEdit(false)
-  }
-
-  const onEdit = () => {
-    setShowEdit(!showEdit)
   }
 
   const handleGenderMale = (e) => {
@@ -155,7 +153,7 @@ export const Main = () => {
   }
 
   const deleteStudent = (id) => {
-    if (window.confirm('Are you sure?') == true) {
+    if (window.confirm('Are you sure?') === true) {
       const newList = students.filter((student) => {
         return student.id !== id
       })
@@ -216,127 +214,146 @@ export const Main = () => {
 
   return (
     <>
-      <AppBar position="sticky">
-        <StyledToolbar>
-          <Typography
-            variant="h6"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            SMS
-          </Typography>
-          <DataObjectIcon sx={{ display: { xs: 'block', sm: 'none' } }} />
-          <Search>
-            <InputBase placeholder="search..." onChange={filterBySearch} />
-          </Search>
-          <Icons>
-            <PersonAddAltIcon
-              onClick={() => {
-                setShowAdd(!showAdd)
-              }}
-              sx={{
-                color: 'white',
-                cursor: 'pointer',
-              }}
-            />
-            <InfoIcon
-              onClick={() => OpenAbout()}
-              sx={{
-                cursor: 'pointer',
-                color: 'white',
-              }}
-            />
-          </Icons>
-          <UserBox onClick={(e) => setOpen(true)}>
-            <MenuIcon sx={{ color: 'white' }} />
-          </UserBox>
-        </StyledToolbar>
-
-        <Menu
-          id="demo-positioned-menu"
-          aria-labelledby="demo-positioned-button"
-          open={open}
-          onClose={(e) => setOpen(false)}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-        >
-          <MenuItem
-            onClick={() => {
-              setShowAdd(true)
-            }}
-          >
-            Add Student
-          </MenuItem>
-
-          <MenuItem
-            onClick={() => {
-              setShowAdd(false)
-            }}
-          >
-            Hide Add Panel
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              setOpenAbout(true)
-            }}
-          >
-            About
-          </MenuItem>
-        </Menu>
-      </AppBar>
-      {showAdd && (
-        <AddStudentForm
-          showAdd={showAdd}
-          AddStudent={AddStudent}
-          gender={gender}
-          handleGenderMale={handleGenderMale}
-          handleGenderFemale={handleGenderFemale}
-        />
-      )}
-      <Container sx={{ py: 8 }} maxWidth="md">
-        {/* End hero unit */}
-        <Typography variant={'h3'} mb={10} textAlign={'center'}>
-          Students
-        </Typography>
-
-        <Grid container spacing={4}>
-          {filteredList.map((student, index) => (
-            <studentDetailsContext.Provider
-              key={index}
-              value={[student, deleteStudent, onEdit, setCurrentStudent]}
+      <Router>
+        <AppBar position="sticky">
+          <StyledToolbar>
+            <Typography
+              variant="h6"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              <Student />
-            </studentDetailsContext.Provider>
-          ))}
-        </Grid>
-      </Container>
+              SMS
+            </Typography>
+            <DataObjectIcon sx={{ display: { xs: 'block', sm: 'none' } }} />
+            <Search>
+              <InputBase placeholder="search..." onChange={filterBySearch} />
+            </Search>
+            <Icons>
+              <Link to="/addstudent">
+                <PersonAddAltIcon
+                  onClick={() => {}}
+                  sx={{
+                    color: 'white',
+                    cursor: 'pointer',
+                  }}
+                />
+              </Link>
+              <Link to="about">
+                <InfoIcon
+                  sx={{
+                    cursor: 'pointer',
+                    color: 'white',
+                  }}
+                />
+              </Link>
+            </Icons>
+            <UserBox onClick={(e) => setOpen(true)}>
+              <MenuIcon sx={{ color: 'white' }} />
+            </UserBox>
+          </StyledToolbar>
 
-      {showEdit && (
-        <EditStudentForm
-          showEdit={showEdit}
-          EditStudent={EditStudent}
-          student={currentStudent}
-          CloseEdit={() => {
-            setShowEdit(false)
-          }}
-        />
-      )}
+          <Menu
+            id="demo-positioned-menu"
+            aria-labelledby="demo-positioned-button"
+            open={open}
+            onClose={(e) => setOpen(false)}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+          >
+            <Link to="/addstudent">
+              <MenuItem>Add Student</MenuItem>
+            </Link>
 
-      {openAbout && (
-        <AboutModal
-          onOpen={(e) => {
-            setOpenAbout(true)
-          }}
-          onClose={(e) => {
-            setOpenAbout(false)
-          }}
-        />
-      )}
+            <Link to="/">
+              <MenuItem>Hide Add Panel</MenuItem>
+            </Link>
+            <MenuItem
+              onClick={() => {
+                setOpenAbout(true)
+              }}
+            >
+              About
+            </MenuItem>
+          </Menu>
+        </AppBar>
+        <Routes>
+          <Route
+            path="/addstudent"
+            element={
+              <AddStudentForm
+                AddStudent={AddStudent}
+                gender={gender}
+                handleGenderMale={handleGenderMale}
+                handleGenderFemale={handleGenderFemale}
+              />
+            }
+          ></Route>
+          <Route
+            path="/"
+            element={
+              <Container sx={{ py: 8 }} maxWidth="md">
+                {/* End hero unit */}
+
+                <Accordion
+                  defaultExpanded={true}
+                  sx={{ backgroundColor: '#dde2ed' }}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography variant={'h3'} align="center">
+                      Students
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Grid container spacing={4}>
+                      {filteredList.map((student, index) => (
+                        <studentDetailsContext.Provider
+                          key={index}
+                          value={[student, deleteStudent, setCurrentStudent]}
+                        >
+                          <Student />
+                        </studentDetailsContext.Provider>
+                      ))}
+                    </Grid>
+                  </AccordionDetails>
+                </Accordion>
+              </Container>
+            }
+          ></Route>
+
+          <Route
+            path="/editstudent"
+            element={
+              <EditStudentForm
+                EditStudent={EditStudent}
+                student={currentStudent}
+              />
+            }
+          ></Route>
+
+          <Route
+            path="/about"
+            element={
+              <AboutModal
+                onOpen={(e) => {
+                  setOpenAbout(true)
+                }}
+                onClose={(e) => {
+                  setOpenAbout(false)
+                }}
+              />
+            }
+          ></Route>
+        </Routes>
+      </Router>
     </>
   )
 }

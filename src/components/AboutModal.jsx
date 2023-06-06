@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import {
   Modal,
   Button,
@@ -6,13 +6,14 @@ import {
   Typography,
   Box,
   styled,
-} from "@mui/material"
+} from '@mui/material'
+import { Link } from 'react-router-dom'
 
 const StyledModal = styled(Modal)({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundColor: "black",
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: 'black',
 })
 
 export const AboutModal = ({ onClose, onOpen }) => {
@@ -26,9 +27,9 @@ export const AboutModal = ({ onClose, onOpen }) => {
       <Box
         width={400}
         height={280}
-        color={"text.primary"}
-        backgroundColor={"white"}
-        sx={{ border: "2px solid black" }}
+        color={'text.primary'}
+        backgroundColor={'white'}
+        sx={{ border: '2px solid black' }}
         p={3}
         borderRadius={5}
       >
@@ -40,7 +41,7 @@ export const AboutModal = ({ onClose, onOpen }) => {
           <br></br>
 
           <Typography
-            textAlign={"center"}
+            textAlign={'center'}
             color="black"
             fontWeight={500}
             variant="h6"
@@ -57,7 +58,9 @@ export const AboutModal = ({ onClose, onOpen }) => {
           variant="contained"
           aria-label="outlined primary button group"
         >
-          <Button onClick={(e) => onClose()}>Close</Button>
+          <Link to="/">
+            <Button>Go Back</Button>
+          </Link>
         </ButtonGroup>
       </Box>
     </StyledModal>

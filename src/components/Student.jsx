@@ -1,4 +1,6 @@
 import React from 'react'
+import Man3Icon from '@mui/icons-material/Man3'
+import Woman2Icon from '@mui/icons-material/Woman2'
 import {
   Button,
   Card,
@@ -10,9 +12,10 @@ import {
 import CloseIcon from '@mui/icons-material/Close'
 import { useState, useContext } from 'react'
 import { studentDetailsContext } from './Main'
+import { Link } from 'react-router-dom'
 
 export const Student = () => {
-  const [student, deleteStudent, onEdit, setCurrentStudent] = useContext(
+  const [student, deleteStudent, setCurrentStudent] = useContext(
     studentDetailsContext
   )
 
@@ -33,7 +36,8 @@ export const Student = () => {
       >
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography gutterBottom variant="h5" component="h2">
-            ID: {student.id}
+            {student.gender === 'Male' ? <Man3Icon /> : <Woman2Icon />} ID:{' '}
+            {student.id}
           </Typography>
           <Typography gutterBottom variant="h6" component="h2">
             Name: {student.name}
@@ -60,16 +64,17 @@ export const Student = () => {
           >
             {showDetails ? 'Hide' : 'View'}
           </Button>
-          <Button
-            sx={{ color: 'black' }}
-            size="small"
-            onClick={() => {
-              setCurrentStudent(student)
-              onEdit(true)
-            }}
-          >
-            Edit
-          </Button>
+          <Link to="/editstudent">
+            <Button
+              sx={{ color: 'black' }}
+              size="small"
+              onClick={() => {
+                setCurrentStudent(student)
+              }}
+            >
+              Edit
+            </Button>
+          </Link>
           <Button
             onClick={() => deleteStudent(student.id)}
             startIcon={<CloseIcon />}
